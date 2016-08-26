@@ -127,6 +127,8 @@
                 this.playSound(".banana-sound");
                 this.bet = Math.max(1, this.bet - 1);
             },
+
+            // animate the tallying of a jackpot
             animateMetric(metricName, targetValue) {
                 if (this[metricName] !== targetValue) {
                     this[metricName]++;
@@ -177,7 +179,6 @@
                 }
             },
             loadNextSpin() {
-                debugger;
                 this.spin = this.machine.spin();
                 this.$broadcast('on-next-spin-load', this.spin);
             }
@@ -203,6 +204,7 @@
         events: {
             'on-reel-spin-complete': function(reelIndex) {
                 if (reelIndex === this.machine.reels.length - 1) {
+                    // The last reel finished spinning, so figure out if it's a win
                     this.stopMusic(".star-sound");
                     this.isSpinning = false;
                     this.isJackpot = this.machine.isJackpot(this.spin);
@@ -220,7 +222,7 @@
             symbolsPerReel: function(newValue) {
                 let reels = this.reels.map(reel => reel.slice(0, parseInt(newValue)));
                 this.machine = new SlotMachineModel(reels);
-                this.loadNextSpin();
+                this.$nextTick(function() { this.loadNextSpin(); });
             }
         },
         ready() {
@@ -255,7 +257,7 @@
     }
 
     .slot-machine__marquee__star {
-        @media (max-width: $screen-xs) {
+        @media (max-width: $screen-sm) {
             & {
                 display: none;
             }

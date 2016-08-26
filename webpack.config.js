@@ -51,15 +51,15 @@ module.exports = {
     },
     vue: {
         loaders: {
-            //css: ExtractTextPlugin.extract("css"),
-            //sass: ExtractTextPlugin.extract("css!sass")
+            css: ExtractTextPlugin.extract("css"),
+            sass: ExtractTextPlugin.extract("css!sass")
         },
         autoprefixer: {
             browsers: ['last 2 versions']
         }
     },
     plugins: [
-        //new ExtractTextPlugin("style.css"),
+        new ExtractTextPlugin("style.css"),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",

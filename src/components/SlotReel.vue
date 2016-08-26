@@ -23,18 +23,25 @@
         data() {
             return {
                 reel: [],
-                symbolCount: 0
+                symbolCount: 0 // The total number of symbols created for this reel
             };
         },
         methods: {
             animateSpin() {
                 let $reel = this.$el.querySelector(".slot-reel");
                 let $symbol = $reel.querySelector(".slot-symbol");
-                let base = 2500;
-                let interval = base / 2;
+
+                // The first reel will spin for at least base milliseconds
+                const base = 2500;
+
+                // Used to set the randomizaiton min and max
+                const interval = base / 2;
                 let duration = getRandomInt(base + this.reelIndex * interval,
                                             base + (this.reelIndex + 1) * interval);
                 let that = this;
+
+                // Animate the reel spin using a custom bezier path
+                // Adds a nice little bounce at the end of each spin
                 dynamics.animate($reel, {
                     translateY: $symbol.offsetHeight - $reel.offsetHeight
                 }, {
@@ -52,24 +59,26 @@
                 this.animateSpin();
             },
             'on-next-spin-load': function(result) {
+
                 // Reset the transform
                 let $reel = this.$el.querySelector(".slot-reel");
                 dynamics.css($reel, { transform: '' });
                 
                 this.reel = []; // Clean up the reel
                 if (this.symbolCount) this.symbolCount--;
-                
-                let extraLoops = 2;
-                let reelLength = extraLoops * this.symbols.length +
+
+                // At least this many symbols per reel
+                const base = 10 - (10 % this.symbols.length);
+                let reelLength = base +
                     this.symbols.length - (this.symbolCount % this.symbols.length) +
                     this.symbols.indexOf(result[this.reelIndex]) + 1;
 
                 for (let i = 0; i < reelLength; i++) {
-                    let symbol = this.symbols[(this.symbolCount + i) % this.symbols.length];
+                    let symbol = this.symbols[(this.symbolCount + i) % 
+                        this.symbols.length];
                     this.reel.push(symbol);
                 }
                 this.symbolCount += reelLength;
-                console.log(this.symbols.length);
             }
         }
     }
