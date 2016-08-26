@@ -4,8 +4,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const paths = {
     src: path.join(__dirname, 'src'),
-    public: path.join(__dirname, 'public'),
-    build: path.join(__dirname, 'public', 'build')
+    build: path.join(__dirname, 'build')
 };
 
 module.exports = {
@@ -14,7 +13,7 @@ module.exports = {
     },
     output: {
         path: paths.build,
-        publicPath: '/build/',
+        publicPath: '/espresso-slots/',
         filename: '[name].js'
     },
     resolveLoader: {
@@ -69,7 +68,7 @@ module.exports = {
     devServer: {
         historyApiFallback: true,
         noInfo: true,
-        contentBase: paths.public
+        contentBase: paths.build
     },
     devtool: '#eval-source-map'
 };
