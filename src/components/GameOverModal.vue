@@ -3,7 +3,7 @@
         :show.sync="show">
         <h3 slot="header">Wah Wah!</h3>
         <div slot="body">
-            <img class="thumbtack-modal__icon" src="/static/img/game_over.png" />
+            <img class="thumbtack-modal__icon" src="/espresso-slots/static/img/game_over.png" />
             <div>
                 You lost all your <span class="thumbtack-modal__emphasis">imaginary points!</span> <br>
                 Now go make yourself a cup of coffee.

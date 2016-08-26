@@ -56,12 +56,12 @@
             :show.sync="showSettings">
         </settings-modal>
         <!-- Sounds -->
-        <audio class="intro-sound" src="/static/audio/intro.mp3"></audio>
-        <audio class="jackpot-sound" src="/static/audio/jackpot.mp3"></audio>
-        <audio class="coin-sound" src="/static/audio/coin.mp3"></audio>
-        <audio class="banana-sound" src="/static/audio/banana.mp3"></audio>
-        <audio class="star-sound" src="/static/audio/star.mp3"></audio>
-        <audio class="game-over-sound" src="/static/audio/game_over.mp3"></audio>
+        <audio class="intro-sound" src="/espresso-slots/static/audio/intro.mp3"></audio>
+        <audio class="jackpot-sound" src="/espresso-slots/static/audio/jackpot.mp3"></audio>
+        <audio class="coin-sound" src="/espresso-slots/static/audio/coin.mp3"></audio>
+        <audio class="banana-sound" src="/espresso-slots/static/audio/banana.mp3"></audio>
+        <audio class="star-sound" src="/espresso-slots/static/audio/star.mp3"></audio>
+        <audio class="game-over-sound" src="/espresso-slots/static/audio/game_over.mp3"></audio>
     </div>
 </template>
 

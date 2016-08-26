@@ -52,6 +52,6 @@
     body {
         font-family: $bungee;
         font-size: 100%;
-        background: url('/static/img/background.png');
+        background: url('/espresso-slots/static/img/background.png');
     }
 </style>
