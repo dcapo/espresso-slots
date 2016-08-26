@@ -1,0 +1,20 @@
+@mixin button-styles($color) {
+    background-color: $color;
+    &:focus {
+        outline: 0;
+    }
+    &:active {
+        background-color: darken($color, 10%);
+    }
+}
+
+@mixin rounded-black-border($width, $radius) {
+    border: $width solid black;
+    border-radius: $radius;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

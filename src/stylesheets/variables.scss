@@ -1,0 +1,28 @@
+// Colors
+$purple: #6F5B72;
+$yellow: #FBD490;
+$neon: #ff0000;
+$light-brown: #A37458;
+$dark-brown: #7A5742;
+$green: #3ABDAF;
+$black: #282A29;
+
+// Typography
+@import url(https://fonts.googleapis.com/css?family=Bungee|Bungee+Shade);
+$bungee-shade: 'Bungee Shade', 'Bungee', Helvetica, sans-serif;
+$bungee: 'Bungee', Helvetica, sans-serif;
+
+// Grid
+$screen-xs: 480px;
+$screen-sm: 768px;
+$screen-md: 992px;
+$screen-lg: 1200px;
+
+// Shared Dimensions
+$reel-viewport-size-xs: 80px;
+$reel-viewport-size-sm: 130px;
+$reel-viewport-size-md: 200px;
+$reel-viewport-border-width: 4px;
+
+// Bootstrap
+$enable-flex: true;
