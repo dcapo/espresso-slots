@@ -55,13 +55,8 @@
             :symbols-per-reel.sync="symbolsPerReel"
             :show.sync="showSettings">
         </settings-modal>
-        <!-- Sounds -->
-        <audio class="intro-sound" src="/espresso-slots/static/audio/intro.mp3"></audio>
-        <audio class="jackpot-sound" src="/espresso-slots/static/audio/jackpot.mp3"></audio>
-        <audio class="coin-sound" src="/espresso-slots/static/audio/coin.mp3"></audio>
-        <audio class="banana-sound" src="/espresso-slots/static/audio/banana.mp3"></audio>
-        <audio class="star-sound" src="/espresso-slots/static/audio/star.mp3"></audio>
-        <audio class="game-over-sound" src="/espresso-slots/static/audio/game_over.mp3"></audio>
+
+        <audio v-for="sound in audio" :src="sound"></audio>
     </div>
 </template>
 
@@ -76,6 +71,7 @@
     import SettingsModal from "./SettingsModal.vue";
     import GameOverModal from "./GameOverModal.vue";
     import PrizeModal from "./PrizeModal.vue";
+    import audio from "../assets/audio/index";
 
     export default {
         components: {
@@ -99,7 +95,7 @@
                 isSpinning: false,
                 isJackpot: false,
                 marqueeIsLit: false,
-                prizeCategory: { icon: '', prize: '' },
+                prizeCategory: { prize: '', icon: '' },
                 showPrize: false,
                 showGameOver: false,
                 showSettings: false,
@@ -107,7 +103,8 @@
                 enableMusic: true,
                 spins: 10,
                 bet: 1,
-                lastWin: 0
+                lastWin: 0,
+                audio
             };
         },
         methods: {
@@ -116,15 +113,15 @@
                 this.isJackpot = false;
                 this.marqueeIsLit = false;
                 this.animate(".spin-button", "pulse");
-                this.playMusic(".star-sound");
+                this.playMusic("star.mp3");
                 this.$broadcast('on-spin');
             },
             increaseBet(e) {
-                this.playSound(".coin-sound");
+                this.playSound("coin.mp3");
                 this.bet = Math.min(this.spins, this.bet + 1);
             },
             decreaseBet(e) {
-                this.playSound(".banana-sound");
+                this.playSound("banana.mp3");
                 this.bet = Math.max(1, this.bet - 1);
             },
 
@@ -135,27 +132,29 @@
                     setTimeout(() => this.animateMetric(metricName, targetValue), 200);
                 }
             },
-            playSound(selector) {
+            playSound(filename) {
                 if (this.enableSound) {
-                    let sound = new Audio(this.$el.querySelector(selector).src);
+                    let sound = new Audio(this.audio[filename]);
                     sound.play();
                 }
             },
-            playMusic(selector) {
+            playMusic(filename) {
                 if (this.enableMusic) {
-                    this.$el.querySelector(selector).play();
+                    this.music = new Audio(this.audio[filename]);
+                    this.music.play();
                 }
             },
             stopMusic(selector) {
-                let sound = this.$el.querySelector(selector);
-                sound.pause();
-                sound.currentTime = 0;
+                if (this.music) {
+                    this.music.pause();
+                    this.music.currentTime = 0;
+                }
             },
             animate(selector, animation) {
                 $(this.$el).find(selector).animateCss(animation);
             },
             scoreWinAndCelebrate() {
-                this.playSound(".jackpot-sound");
+                this.playSound("jackpot.mp3");
                 let lastWin = this.machine.scoreForSpin(this.spin, this.bet);
                 this.prizeCategory = this.spin[0].category;
 
@@ -172,10 +171,10 @@
                 this.spins -= this.bet;
                 this.bet = Math.min(this.bet, this.spins);
                 if (this.isGameOver) {
-                    this.playSound(".game-over-sound");
+                    this.playSound("game_over.mp3");
                     setTimeout(() => this.showGameOver = true, 1000);
                 } else {
-                    this.playSound(".banana-sound");
+                    this.playSound("banana.mp3");
                 }
             },
             loadNextSpin() {
@@ -199,6 +198,9 @@
                 return {
                     'neon': this.marqueeIsLit
                 };
+            },
+            audioUrl(filename) {
+                return audio[filename];
             }
         },
         events: {
@@ -212,9 +214,9 @@
 
                     this.loadNextSpin();
                 } else {
-                    let selector = this.machine.spinLooksPromisingAtIndex(this.spin, reelIndex) ?
-                        ".coin-sound" : ".banana-sound";
-                    this.playSound(selector);
+                    let filename = this.machine.spinLooksPromisingAtIndex(this.spin, reelIndex) ?
+                        "coin.mp3" : "banana.mp3";
+                    this.playSound(filename);
                 }
             }
         },
@@ -227,7 +229,7 @@
         },
         ready() {
             this.animate(".slot-machine__marquee", "tada");
-            this.playSound(".intro-sound");
+            this.playSound("intro.mp3");
             this.$broadcast('on-next-spin-load', this.spin);
         }
     }

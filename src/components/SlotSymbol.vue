@@ -1,10 +1,12 @@
 <template>
     <div class="slot-symbol">
-        <img class="slot-symbol__icon" :src="'/espresso-slots/static/img/reels/' + symbol.icon"/>
+        <img class="slot-symbol__icon" :src="'/espresso-slots/' + symbol.icon"/>
     </div>
 </template>
 
 <script>
+    var icons = require.context('../assets/img/reels', true, /\.(png|jpg|gif|svg)$/);
+
     export default {
         props: ['symbol']
     }

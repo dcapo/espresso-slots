@@ -1,10 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const paths = {
     src: path.join(__dirname, 'src'),
-    build: path.join(__dirname, 'build')
+    build: path.join(__dirname, 'build'),
 };
 
 module.exports = {
@@ -39,11 +40,10 @@ module.exports = {
                 loader: 'vue-html'
             },
             {
-                test: /\.(png|jpg|gif|svg|woff2?|ttf|eot)$/,
-                loader: 'url',
+                test: /\.(png|jpg|gif|svg|woff2?|ttf|eot|mp3)$/,
+                loader: 'file',
                 query: {
-                    limit: 10000,
-                    name: '[name].[ext]?[hash]'
+                    name: '[name].[ext]'
                 }
             }
         ]
