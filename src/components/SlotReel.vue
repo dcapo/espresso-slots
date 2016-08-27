@@ -34,7 +34,7 @@
                 // The first reel will spin for at least base milliseconds
                 const base = 2500;
 
-                // Used to set the randomizaiton min and max
+                // Used to set the randomized min and max durations
                 const interval = base / 2;
                 let duration = getRandomInt(base + this.reelIndex * interval,
                                             base + (this.reelIndex + 1) * interval);
@@ -52,14 +52,8 @@
                         that.$dispatch('on-reel-spin-complete', that.reelIndex);
                     }
                 });
-            }
-        },
-        events: {
-            'on-spin': function() {
-                this.animateSpin();
             },
-            'on-next-spin-load': function(result) {
-
+            loadNextSpin(result) {
                 // Reset the transform
                 let $reel = this.$el.querySelector(".slot-reel");
                 dynamics.css($reel, { transform: '' });
@@ -73,12 +67,21 @@
                     this.symbols.length - (this.symbolCount % this.symbols.length) +
                     this.symbols.indexOf(result[this.reelIndex]) + 1;
 
+                // Add new symbols to the reel
                 for (let i = 0; i < reelLength; i++) {
                     let symbol = this.symbols[(this.symbolCount + i) % 
                         this.symbols.length];
                     this.reel.push(symbol);
                 }
                 this.symbolCount += reelLength;
+            }
+        },
+        events: {
+            'on-spin': function() {
+                this.animateSpin();
+            },
+            'on-next-spin-load': function(result) {
+                this.loadNextSpin(result);
             }
         }
     }
