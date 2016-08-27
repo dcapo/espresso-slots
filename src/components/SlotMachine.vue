@@ -56,7 +56,7 @@
             :show.sync="showSettings">
         </settings-modal>
 
-        <audio v-for="sound in audio" :src="sound"></audio>
+        <audio v-for="key in audio.keys()" :src="audio(key)"></audio>
     </div>
 </template>
 
@@ -71,7 +71,7 @@
     import SettingsModal from "./SettingsModal.vue";
     import GameOverModal from "./GameOverModal.vue";
     import PrizeModal from "./PrizeModal.vue";
-    import audio from "../assets/audio/index";
+    let audio = require.context('../assets/audio/', true, /\.mp3$/);
 
     export default {
         components: {
@@ -134,13 +134,13 @@
             },
             playSound(filename) {
                 if (this.enableSound) {
-                    let sound = new Audio(this.audio[filename]);
+                    let sound = new Audio(this.audio(`./${filename}`));
                     sound.play();
                 }
             },
             playMusic(filename) {
                 if (this.enableMusic) {
-                    this.music = new Audio(this.audio[filename]);
+                    this.music = new Audio(this.audio(`./${filename}`));
                     this.music.play();
                 }
             },
@@ -198,9 +198,6 @@
                 return {
                     'neon': this.marqueeIsLit
                 };
-            },
-            audioUrl(filename) {
-                return audio[filename];
             }
         },
         events: {

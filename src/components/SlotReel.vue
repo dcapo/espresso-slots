@@ -88,7 +88,7 @@
     @import '../stylesheets/variables.scss';
 
     .viewport {
-        margin: 10px;
+        margin: 8px;
         background: white;
         overflow: hidden;
         border-radius: 10px;
