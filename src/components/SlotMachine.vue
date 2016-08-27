@@ -299,6 +299,9 @@
 
     .slot-machine__body {
         margin: 0px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         padding: 10px;
     }
     .slot-machine__reels {
